@@ -15,6 +15,7 @@ class Rack::Bug
     option_accessor :password
     option_accessor :panel_classes
     option_accessor :intercept_redirects
+    option_accessor :default_location
 
     # The underlying options Hash. During initialization (or outside of a
     # request), this is a default values Hash. During a request, this is the
@@ -69,6 +70,7 @@ class Rack::Bug
         'rack-bug.verbose'  => nil,
         'rack-bug.secret_key' => nil,
         'rack-bug.intercept_redirects' => false,
+        'rack-bug.default_location' => 'top',
         'rack-bug.panels' => [],
         'rack-bug.panel_classes' => [
           RailsInfoPanel,

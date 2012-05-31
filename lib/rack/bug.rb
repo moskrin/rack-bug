@@ -38,6 +38,10 @@ class Rack::Bug
     @env = env
     @original_request = Rack::Request.new(@env)
 
+    if @original_request.cookies["rack_bug_location"]
+      env["rack-bug.default_location"] = @original_request.cookies["rack_bug_location"] 
+    end
+
     if toolbar_requested? && ip_authorized? && password_authorized? && toolbar_xhr?
       @toolbar.call(env)
     else

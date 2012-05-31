@@ -8,7 +8,9 @@ describe Rack::Bug do
 
   it "updates the Content-Length" do
     response = get "/"
-    response["Content-Length"].should == response.body.size.to_s
+    body = response.body 
+    content_length = body.respond_to?(:bytesize) ? body.bytesize : body.size
+    response["Content-Length"].should == content_length
   end
 
   it "serves the Rack::Bug assets under /__rack_bug__/" do
@@ -74,7 +76,7 @@ describe Rack::Bug do
 
     it "should provide a link to the target URL" do
       response = get "/redirect", {}, "rack-bug.intercept_redirects" => true
-      response.should have_selector("a[href='/']")
+      response.should have_selector("a[href='http://example.org/']")
     end
     
     it "inserts the toolbar if requested" do
